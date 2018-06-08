@@ -107,5 +107,69 @@ def get_table_or_view(con_str):
     return jsonify({'task_ get due con_str...': con_str})
 
 
+''' Get Related fields due con_name'''
+
+
+@app.route('/datameer/gateway/get/relatedfields/<string:con_name>', methods=['GET'])
+def get_related_fields(con_name):
+    return jsonify({'task_ get related fields due con_str...': con_name})
+
+
+''' Get Selected fields due con_name'''
+
+
+@app.route('/datameer/gateway/get/selectedfields/<string:con_name>', methods=['GET'])
+def get_selected_fields(con_name):
+    return jsonify({'task_ get selected fields due con_str...': con_name})
+
+
+''' Run Job with con_name '''
+
+
+@app.route('/datameer/gateway/run/job/<string:con_name>', methods=['GET'])
+def run_job(con_name):
+    return jsonify({'task_ get run job with con_str...': con_name})
+
+
+''' List Connections'''
+
+
+@app.route('/datameer/gateway/get/connections', methods=['GET'])
+def get_connections():
+    return jsonify({'task_ get run job with con_str.. ': ' get connections called'})
+
+
+''' Get Columns for selected tables, Selected tables passed with Request Body '''
+
+
+@app.route('/database/gateway/get/columns', methods=['POST'])
+def get_connections():
+    return jsonify({'task_ get run job with con_str.. ': ' get columns called'})
+
+
+''' Get Updated table or view data from Datatable Updated tables passed with Request Body '''
+
+
+@app.route('/datameer/gateway/get/updatedtableorview', methods=['POST'])
+def get_connections():
+    return jsonify({'task_ get run job with con_str.. ': ' get updatedtableorview called'})
+
+
+''' Update new Cron expression with Request Body'''
+
+
+@app.route('/datameer/gateway/get/updatedcronexp', methods=['POST'])
+def get_connections():
+    return jsonify({'task_ get run job with con_str.. ': ' get updatedtableorview called'})
+
+
+''' Get Connection String with database name  '''
+
+
+@app.route('/datameer/gateway/get/constr/<string:db_name>', methods=['GET'])
+def get_table_or_view(db_name):
+    return jsonify({'task_ get due db_name...': db_name})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
