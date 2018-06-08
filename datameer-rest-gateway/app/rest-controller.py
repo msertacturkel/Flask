@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, make_response, request, url_for
+from flask import Flask, jsonify, make_response, request, url_for, abort
 
 app = Flask(__name__)
 
@@ -16,16 +16,23 @@ tasks = [
         'done': False
     }
 ]
+'''
+GET 
+'''
+
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
+
+
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
     task = [task for task in tasks if task['id'] == task_id]
     if len(task) == 0:
         abort(404)
     return jsonify({'task': task[0]})
+
 
 @app.route('/todo/api/v1.0/tasks', methods=['POST'])
 def create_task():
@@ -39,6 +46,7 @@ def create_task():
     }
     tasks.append(task)
     return jsonify({'task': task}), 201
+
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):
@@ -58,6 +66,7 @@ def update_task(task_id):
     task[0]['done'] = request.json.get('done', task[0]['done'])
     return jsonify({'task': task[0]})
 
+
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
     task = [task for task in tasks if task['id'] == task_id]
@@ -66,9 +75,11 @@ def delete_task(task_id):
     tasks.remove(task[0])
     return jsonify({'result': True})
 
+
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 def make_public_task(task):
     new_task = {}
@@ -78,6 +89,23 @@ def make_public_task(task):
         else:
             new_task[field] = task[field]
     return new_task
+
+
+''' Create New Connection Service Template'''
+
+
+@app.route('/datameer/gateway/create/connection', methods=['POST'])
+def create_new_connection():
+    return jsonify({'task_': ' new connection created ...'}), 201
+
+
+''' Get view or Table due con_str'''
+
+
+@app.route('/datameer/gateway/get/viewortable/<string:con_str>', methods=['GET'])
+def get_table_or_view(con_str):
+    return jsonify({'task_ get due con_str...': con_str})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
