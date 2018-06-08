@@ -16,7 +16,7 @@ _mailinglist
 .idea/
 *.xml
 docs/_build/
-venv/
+venv
 
 # Coverage reports
 htmlcov/
