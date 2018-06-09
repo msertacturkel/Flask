@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, make_response, request, url_for, abort
+from services.MysqlConsumer import MysqlConsumer
 
 app = Flask(__name__)
 
@@ -103,7 +104,7 @@ def create_new_connection():
 
 
 @app.route('/datameer/gateway/get/viewortable/<string:con_str>', methods=['GET'])
-def get_table_or_view(con_str):
+def get_table_or_view_constr(con_str):
     return jsonify({'task_ get due con_str...': con_str})
 
 
@@ -143,33 +144,40 @@ def get_connections():
 
 
 @app.route('/database/gateway/get/columns', methods=['POST'])
-def get_connections():
-    return jsonify({'task_ get run job with con_str.. ': ' get columns called'})
+def get_columns():
+    return jsonify({'task_ get run job with con_str.. ': ' get columns called'}), 201
 
 
 ''' Get Updated table or view data from Datatable Updated tables passed with Request Body '''
 
 
 @app.route('/datameer/gateway/get/updatedtableorview', methods=['POST'])
-def get_connections():
-    return jsonify({'task_ get run job with con_str.. ': ' get updatedtableorview called'})
+def get_updatedtableorview():
+    return jsonify({'task_ get run job with con_str.. ': ' get updatedtableorview called'}), 201
 
 
 ''' Update new Cron expression with Request Body'''
 
 
 @app.route('/datameer/gateway/get/updatedcronexp', methods=['POST'])
-def get_connections():
-    return jsonify({'task_ get run job with con_str.. ': ' get updatedtableorview called'})
+def get_updatedcronexp():
+    return jsonify({'task_ get run job with con_str.. ': ' get updatedtableorview called'}), 201
 
 
 ''' Get Connection String with database name  '''
 
 
 @app.route('/datameer/gateway/get/constr/<string:db_name>', methods=['GET'])
-def get_table_or_view(db_name):
+def get_table_or_view_dbname(db_name):
     return jsonify({'task_ get due db_name...': db_name})
 
+@app.route('/test', methods=['GET'])
+def test():
+    mysqlConsumer = MysqlConsumer()
+    q="SELECT * FROM a.APP_USER"
+    mysqlConsumer.read_config()
+    rest_result = mysqlConsumer.execute_query(q)
+    return jsonify({'tasks': rest_result})
 
 if __name__ == '__main__':
     app.run(debug=True)
